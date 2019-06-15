@@ -2,10 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 开启注解包扫描 -->
-    <context:component-scan base-package="com.muyu.dao" annotation-config="true"/>
+    <context:component-scan base-package="com.muyu.dao.*" annotation-config="true"/>
 
     <!-- 加载属性文件 -->
     <bean id="propertyConfigurer"
@@ -55,19 +56,47 @@
     <!-- 集成mybatis -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath*:mappers/*Mapper.xml"/>
+        <property name="mapperLocations">
+            <array>
+                <value>classpath*:mappers/*Mapper.xml</value>
+                <value>classpath*:mappers/base/*Mapper.xml</value>
+            </array>
+        </property>
     </bean>
 
     <!-- 扫描dao层接口 -->
     <bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.muyu.dao"/>
+        <property name="basePackage" value="com.muyu.dao">
+
+        </property>
     </bean>
 
-    <!-- 使用@Transactional进行声明式事务管理需要声明下面这行 -->
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+<!--    &lt;!&ndash; 使用@Transactional进行声明式事务管理需要声明下面这行 &ndash;&gt;-->
+<!--    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>-->
     <!-- 事务管理 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
         <property name="rollbackOnCommitFailure" value="true"/>
     </bean>
+
+    <!-- 配置事务切面Bean,指定事务管理器 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!-- 用于配置详细的事务语义 -->
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="*" read-only="true" />
+
+        </tx:attributes>
+    </tx:advice>
+
+
+    <aop:config>
+        <!--配置一个切入点，匹配com.muyu.service包下 所有以Impl结尾的类的所有方法的执行-->
+        <aop:pointcut id="mybatisPointcut"
+                      expression="execution(* com.muyu.impl.*Impl.*(..))"/>
+        <!-- 指定在txAdvice切入点应用txAdvice事务切面 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="mybatisPointcut"/>
+    </aop:config>
 </beans>

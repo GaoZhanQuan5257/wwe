@@ -6,6 +6,8 @@ import com.muyu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -13,7 +15,13 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User queryAll() {
-       return userMapper.selectByPrimaryKey(1);
+    public List<User> queryAll() {
+       return userMapper.selectAll();
+    }
+
+    @Override
+    public int insertUser(User user) {
+        user.setId(null);
+        return userMapper.insert(user);
     }
 }
