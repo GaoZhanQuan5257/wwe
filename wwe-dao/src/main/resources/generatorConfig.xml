@@ -22,7 +22,22 @@
 
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+
+
+        <!-- 自定义插件git地址：
+            https://github.com/GaoZhanQuan5257/plugins.git   master分支
+            直接mvn clean install成功后，插件才可使用，否则插件不可可用    -->
+        
         <plugin type="com.muyu.mybatis.plugins.OverwriteXmlPlugin"/>
+
+
+        <!-- 注意：若此处的table的生成类为非第一次生成，则需要注视此插件，否则会覆盖默认的业务xml逻辑       -->
+        <plugin type="com.muyu.mybatis.plugins.BaseMapperConfigPlugin">
+            <property name="targetPackage" value="mappers/base"/>
+            <property name="targetProject" value="src/main/resources"/>
+            <property name="namespace" value="com.muyu.dao"/>
+        </plugin>
 
         <!-- optional，旨在创建class时，对注释进行控制 -->
         <commentGenerator>
