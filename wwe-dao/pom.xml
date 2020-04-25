@@ -23,6 +23,11 @@
 
 
     <dependencies>
+        <!-- 引入Druid数据源  -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
         <!-- mybatis-generator-core 反向生成java代码-->
         <dependency>
             <groupId>org.mybatis.generator</groupId>
