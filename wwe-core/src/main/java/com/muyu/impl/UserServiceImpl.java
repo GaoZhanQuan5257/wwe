@@ -8,20 +8,44 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserMapper userMapper;
 
     @Override
     public List<User> queryAll() {
-       return userMapper.selectAll();
+        return userMapper.selectAll();
     }
 
     @Override
-    public int insertUser(User user) {
-        user.setId(null);
-        return userMapper.insert(user);
+    public void saveUser(User user) {
+        userMapper.insert(user);
     }
+
+    @Override
+    public void updateUserById(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public void deleteUserById(Long userId) {
+        userMapper.deleteByPrimaryKey(userId);
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public List<User> getUserList() {
+
+        List<User> userList = userMapper.selectAll();
+
+        return userList;
+    }
+
 }

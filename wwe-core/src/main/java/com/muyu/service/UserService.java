@@ -8,5 +8,13 @@ public interface UserService {
 
     List<User> queryAll();
 
-    int insertUser(User user);
+    void saveUser(User user);
+
+    void updateUserById(User user);
+
+    void deleteUserById(Long userId);
+
+    User getUserById(Long userId);
+
+    List<User> getUserList();
 }

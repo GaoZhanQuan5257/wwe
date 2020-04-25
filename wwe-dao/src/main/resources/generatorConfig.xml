@@ -24,11 +24,10 @@
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
 
 
-
         <!-- 自定义插件git地址：
             https://github.com/GaoZhanQuan5257/plugins.git   master分支
             直接mvn clean install成功后，插件才可使用，否则插件不可可用    -->
-        
+
         <plugin type="com.muyu.mybatis.plugins.OverwriteXmlPlugin"/>
 
 

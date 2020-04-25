@@ -1,4 +1,6 @@
 package com.muyu.entity.base;
 
-public class BaseOrders {
+import java.io.Serializable;
+
+public class BaseOrders implements Serializable {
 }
