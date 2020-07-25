@@ -93,7 +93,8 @@
         <table tableName="${tableName}" domainObjectName="${domainName}" enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-            <property name="rootClass" value="com.muyu.entity.base.Base${domainName}"/>
+            <!--            实体类不需要集成父类，开发自行封装DTO、VO-->
+            <!--            <property name="rootClass" value="com.muyu.entity.base.Base${domainName}"/>-->
             <property name="rootInterface" value="com.muyu.dao.base.Base${domainName}Mapper"/>
         </table>
     </context>
