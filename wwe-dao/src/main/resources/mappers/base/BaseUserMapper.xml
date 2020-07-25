@@ -7,4 +7,7 @@
       to this file before it is usable by MyBatis.
     This file was generated on Sat Jul 25 13:09:01 CST 2020.
   -->
+  <select id="selectAll" resultMap="BaseResultMap">
+        select * FROM user
+    </select>
 </mapper>
