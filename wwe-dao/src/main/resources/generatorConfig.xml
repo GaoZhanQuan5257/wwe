@@ -90,11 +90,11 @@
         </javaClientGenerator>
 
         <!-- 配置表格映射 -->
-        <table tableName="${tableName}" domainObjectName="${tableName}" enableCountByExample="false"
+        <table tableName="${tableName}" domainObjectName="${domainName}" enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-            <property name="rootClass" value="com.muyu.entity.base.Base${tableName}"/>
-            <property name="rootInterface" value="com.muyu.dao.base.Base${tableName}Mapper"/>
+            <property name="rootClass" value="com.muyu.entity.base.Base${domainName}"/>
+            <property name="rootInterface" value="com.muyu.dao.base.Base${domainName}Mapper"/>
         </table>
     </context>
 </generatorConfiguration>
