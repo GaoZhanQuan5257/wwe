@@ -95,6 +95,8 @@
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <!--            实体类不需要集成父类，开发自行封装DTO、VO-->
             <!--            <property name="rootClass" value="com.muyu.entity.base.Base${domainName}"/>-->
+
+            <!--            如果不是新类，生成时需要注释掉这个，否则会覆盖之前开发的成果-->
             <property name="rootInterface" value="com.muyu.dao.base.Base${domainName}Mapper"/>
         </table>
     </context>
